@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,6 +9,8 @@ public class Main {
         task2();
         System.out.println("Задание 3");
         task3();
+        System.out.println("Задание 4");
+        task4();
     }
 
 
@@ -21,7 +24,7 @@ public class Main {
     Подсказку с выполнением задания вы можете найти в шпаргалке урока.*
      */
 
-    public static void task1(){
+    private static void task1(){
         leapYear(2024);
     }
     private static void leapYear( int year){
@@ -64,7 +67,7 @@ public class Main {
 
     //int currentYear = LocalDate.now().getYear();
 
-    public static void task2 () {
+    private static void task2 () {
         int clientDeviceYear = 2015;
         byte clientOS = 1;
         typeOs(clientDeviceYear, clientOS);
@@ -123,4 +126,54 @@ public class Main {
         if (distance > 100) {ok = 0;}
         return ok;
     }
+
+    /*4
+    Напишите метод, который получает на вход массив и переставляет все его элементы в обратном порядке.
+    Подобное задание вы решали в домашнем задании по массивам.
+    - Текст прошлого задания
+        Отойдем от подсчетов.
+        В нашей бухгалтерской книге появился баг. Что-то пошло нет так, и Ф.И.О. сотрудников начали отображаться в обратную сторону. Т. е.
+        вместо «Иванов Иван Иванович» мы имеем «чивонавИ навИ вонавИ».
+        Данные с именами сотрудников хранятся в виде массива символов (char[]).
+        Напишите код, который в случае такого бага будет выводить Ф. И. О. сотрудников в корректном виде. В качестве данных для массива используйте:
+        char[] reverseFullName = { 'n', 'a', 'v', 'I', ' ', 'v', 'o', 'n', 'a', 'v', 'I'};
+        В результате в консоль должно быть выведено "Ivanov Ivan".
+        **Важно**: не используйте дополнительные массивы для решения этой задачи. Необходимо корректно пройти по массиву циклом и
+        распечатать его элементы в правильном порядке
+    В метод приходит массив, допустим:
+    {3, 2, 1, 6, 5}.
+    Нужно без вспомогательного массива переместить элементы так, чтобы поданный массив стал: {5, 6, 1, 2, 3}.
+    Рекомендуем написать этот метод без возвращаемого значения. Вы будете приятно удивлены, что даже если мы не вернем массив,
+    первоначальный массив изменится, когда мы будем модернизировать пришедший в виде параметра массив внутри метода.
+    Причину такого поведения ссылочных типов (объектов) вы узнаете на следующем уроке или на QA-вебинаре.
+    * */
+
+    private static void task4 (){
+        Object[] reverseFullName = { 'n', 'a', 'v', 'I', ' ', 'v', 'o', 'n', 'a', 'v', 'I'};
+        nameCorrect(reverseFullName);
+        System.out.println();
+        Object[] data = {3, 2, 1, 6, 5};
+        nameCorrect(data);
+        System.out.println();
+        arrayReplace(data);
+        arrayReplace(reverseFullName);
+    }
+
+    private static void nameCorrect (Object[] arr) {
+        for (int i = arr.length - 1; i >= 0; i--) {
+            System.out.print(arr[i]);
+        }
+    }
+
+    private static void arrayReplace (Object[] arr){
+        int j = arr.length-1;
+        for (int i = 0; i < arr.length/2; i++) {
+            Object t = arr[i];
+            arr[i] = arr[j-i];
+            arr[j-i] = t;
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+
+
 }
