@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -11,6 +12,8 @@ public class Main {
         task3();
         System.out.println("Задание 4");
         task4();
+        System.out.println("Задание 5");
+        task5();
     }
 
 
@@ -175,5 +178,43 @@ public class Main {
         System.out.println(Arrays.toString(arr));
     }
 
+    /*
+    Вернемся к задаче о валидаторе текста из урока по строкам.
+        - Условие задачи из урока 1.7
+            Повышенная сложность. Задание 8
+            Дана строка из букв английского алфавита "aabccddefgghiijjkk".
+            Нужно найти и напечатать буквы, которые дублируются в строке.
+            Обратите внимание, что строка отсортирована, т.e. дубли идут друг за другом.
+            В итоге в консоль должен быть выведен результат программы: "acdgijk"
+            - Критерии оценки
+                – Данные в строке отсортированы корректно
+                –При изменении содержания строки результат программы выполняется.
+                – Результат программы выведен в консоль согласно условиям задачи.
+        Напишите метод, который в виде параметра принимает отсортированную строку.
+        Например, aabccddefgghiijjkk.
+        С помощью цикла проверьте, что в строке нет дублей, и выведите в консоль сообщение обэтом.
+        Если дубль найден, нужно прервать поиск по остальным символам и вывести сообщение оприсутствии дубля, причем с указанием,
+        какой именно символ задублирован. Затем сразу же прервать выполнение метода.
+        Сам метод ничего возвращать не должен (void).
+    * */
+        private static void task5 (){
+        String text = "aabccddefgghiijjkk";
+        textParser(text);
+        }
+
+    private static void textParser (String text){
+        StringBuilder textNew = new StringBuilder();
+        for (int i = 1; i < text.length(); i++) {
+            if(!contains(textNew, Character.toString(text.charAt(i))) && text.charAt(i) == text.charAt(i-1)) {
+                //textNew.append(text.charAt(i));
+                System.out.println("Присутствует дубль " + text.charAt(i));
+                break;
+            }
+        }
+        //System.out.println(textNew);
+    }
+    private static boolean contains(StringBuilder sb, String findString){
+        return sb.indexOf(findString) > -1;
+    }
 
 }
