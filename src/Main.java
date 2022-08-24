@@ -1,4 +1,3 @@
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -14,6 +13,8 @@ public class Main {
         task4();
         System.out.println("Задание 5");
         task5();
+        System.out.println("Задание 6");
+        task6();
     }
 
 
@@ -215,6 +216,77 @@ public class Main {
     }
     private static boolean contains(StringBuilder sb, String findString){
         return sb.indexOf(findString) > -1;
+    }
+
+    /*
+    Cнова вспоминаем домашнее задание по массивам. В нем была задача, которая требовала высчитать среднюю выплату за день.
+    Был дан сгенерированный массив из 30 значений от 100 до 200 тысяч, для его генерации допускается использовать метод из прошлого домашнего задания.
+    - Текст прошлого задания
+        Нам нужно понять, какую в среднем сумму наша компания тратила в течение данных 30 дней.
+        Нужно написать программу, которая посчитает среднее значение трат за месяц (то есть сумму всех трат за месяц поделить на количество дней),
+    и вывести в консоль результат в формате: «Средняя сумма трат за месяц составила … рублей».
+        **Важно помнить:** подсчет среднего значения может иметь остаток (то есть быть не целым, а дробным числом).
+    Нужно сгенерировать массив, подать его в наш метод, а внутри метода подсчитать сумму элементов и вычислить среднее значение,
+    которое нужно вернуть из метода в виде результата.
+    Сложность в том, что метод нужно не просто написать, но еще и декомпозировать.
+    То есть для работы этого метода нужно будет создать еще методы (1 или более),
+    которые его будут обслуживать и вычислять промежуточные результаты. Среднее значение нужно вычислять в дробном виде, так как результат должен быть точным.
+    * */
+
+    private static void task6(){
+        var days = 5;
+        int[] arr = generateRandomArray(days);
+        System.out.println(Arrays.toString(arr));
+        var sum = sumInMonth(arr);
+        var avgSum = avgSum(sum, days);
+        var max = maxSum(arr);
+        var min = minSum(arr);
+
+        System.out.println("Сумма трат за месяц составила " + sum + " рублей "
+                            +"\nСредняя сумма трат за месяц составила "+ avgSum+" рублей "
+                            +"\nМинимальная сумма трат за день составила " + min + " рублей "
+                            +"\nМаксимальная сумма трат за день составила "+ max + " рублей");
+
+    }
+    private static int maxSum (int[] arr){
+        int max = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (max < arr[i]) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    private static int minSum (int[] arr){
+        int min = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (min > arr[i] || min == 0) {
+                min = arr[i];
+            }
+        }
+        return min;
+    }
+
+    private static float avgSum (int sum, int days){
+        return (float) sum/days;
+    }
+
+    private static int sumInMonth (int[] arr){
+        int sum = 0;
+        for (int element : arr) {
+            sum += element;
+        }
+
+        return sum;
+    }
+
+    private static int[] generateRandomArray(int numberOfDays) {
+        java.util.Random random = new java.util.Random();
+        int[] arr = new int[numberOfDays];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = random.nextInt(100_000) + 100_000;
+        }
+        return arr;
     }
 
 }
