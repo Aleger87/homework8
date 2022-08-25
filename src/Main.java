@@ -29,14 +29,12 @@ public class Main {
      */
 
     private static void task1(){
-        leapYear(2024);
+        printLeapYear(2000);
     }
-    private static void leapYear( int year){
-        if (year % 400 == 0) {
+    private static void printLeapYear( int year){
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
             System.out.println(year +" високосный год");
-        } else if (year % 4 == 0 && year % 100 != 0) {
-            System.out.println(year +" високосный год");
-        }else {
+        } else {
             System.out.println(year +" невисокосный год");
         }
     }
@@ -74,11 +72,11 @@ public class Main {
     private static void task2 () {
         int clientDeviceYear = 2015;
         byte clientOS = 1;
-        typeOs(clientDeviceYear, clientOS);
+        printTypeOs(clientDeviceYear, clientOS);
 
     }
 
-    private static void typeOs (int year, byte os){
+    private static void printTypeOs (int year, byte os){
         int currentYear = LocalDate.now().getYear();
         if (year < currentYear && os == 0) {
             System.out.println("Установите облегченную версию приложения для iOS по ссылке");
@@ -107,7 +105,7 @@ public class Main {
 
     private static void task3() {
         int deliveryDistance = 101;
-        if (deliveryDistanceCheck(deliveryDistance) == 0){
+        if (checkDeliveryDistance(deliveryDistance)){
             System.out.println("Заберите карту в ближайшем отделении банка");
             return;
         }
@@ -125,10 +123,12 @@ public class Main {
         return day;
     }
 
-    private static int deliveryDistanceCheck(int distance){
-        byte ok = 1;
-        if (distance > 100) {ok = 0;}
-        return ok;
+    private static boolean checkDeliveryDistance(int distance){
+        boolean ok;
+        if (distance > 100) {
+            return true;
+        }
+        return false;
     }
 
     /*4
@@ -193,27 +193,32 @@ public class Main {
                 – Результат программы выведен в консоль согласно условиям задачи.
         Напишите метод, который в виде параметра принимает отсортированную строку.
         Например, aabccddefgghiijjkk.
-        С помощью цикла проверьте, что в строке нет дублей, и выведите в консоль сообщение обэтом.
-        Если дубль найден, нужно прервать поиск по остальным символам и вывести сообщение оприсутствии дубля, причем с указанием,
+        С помощью цикла проверьте, что в строке нет дублей, и выведите в консоль сообщение об этом.
+        Если дубль найден, нужно прервать поиск по остальным символам и вывести сообщение о присутствии дубля, причем с указанием,
         какой именно символ задублирован. Затем сразу же прервать выполнение метода.
         Сам метод ничего возвращать не должен (void).
     * */
         private static void task5 (){
         String text = "aabccddefgghiijjkk";
-        textParser(text);
+        textParser(text, false); //bool true- вывести список, bool false  остановить программу
         }
 
-    private static void textParser (String text){
+    private static void textParser (String text, boolean bool){
         StringBuilder textNew = new StringBuilder();
         for (int i = 1; i < text.length(); i++) {
             if(!contains(textNew, Character.toString(text.charAt(i))) && text.charAt(i) == text.charAt(i-1)) {
-                //textNew.append(text.charAt(i));
-                System.out.println("Присутствует дубль " + text.charAt(i));
-                break;
+                textNew.append(text.charAt(i));
+                if (!bool){
+                    System.out.println("Присутствует дубль " + text.charAt(i));
+                    break;
+                }
             }
+
+
         }
-        //System.out.println(textNew);
+        System.out.println(textNew);
     }
+
     private static boolean contains(StringBuilder sb, String findString){
         return sb.indexOf(findString) > -1;
     }
